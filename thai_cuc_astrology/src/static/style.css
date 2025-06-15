@@ -1,0 +1,636 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f1a 100%);
+    color: #e0e0e0;
+    min-height: 100vh;
+}
+
+.navbar {
+    background: rgba(15, 15, 26, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-brand h1 {
+    color: #FFD700;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-link {
+    color: #e0e0e0;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background: rgba(255, 215, 0, 0.2);
+    color: #FFD700;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.hero-section {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.hero-section h1 {
+    font-size: 2.5rem;
+    color: #FFD700;
+    margin-bottom: 1rem;
+}
+
+.hero-section p {
+    font-size: 1.2rem;
+    color: #b0b0b0;
+}
+
+.calendar-section {
+    background: rgba(42, 42, 74, 0.8);
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.calendar-section h2 {
+    color: #FFD700;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+.month-selector {
+    margin-bottom: 2rem;
+}
+
+.month-selector label {
+    color: #e0e0e0;
+    margin-right: 1rem;
+    font-weight: bold;
+}
+
+.month-selector select {
+    background: rgba(15, 15, 26, 0.8);
+    color: #e0e0e0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.calendar-day {
+    background: rgba(15, 15, 26, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 0.8rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.calendar-day:hover {
+    background: rgba(255, 215, 0, 0.2);
+    border-color: #FFD700;
+    transform: translateY(-2px);
+}
+
+.calendar-day.selected {
+    background: #FFD700;
+    color: #1a1a2e;
+    border-color: #FFD700;
+}
+
+.calendar-day.positive {
+    background: rgba(76, 175, 80, 0.3);
+    border-color: #4CAF50;
+}
+
+.calendar-day.negative {
+    background: rgba(244, 67, 54, 0.3);
+    border-color: #F44336;
+}
+
+.daily-info {
+    background: rgba(42, 42, 74, 0.8);
+    border-radius: 15px;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.daily-info h2 {
+    color: #FFD700;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+.selected-date h3 {
+    color: #87CEEB;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.yin-yang-info {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px 0;
+}
+
+.yin-yang-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.yin-yang-symbol {
+    font-size: 2em;
+    line-height: 1;
+}
+
+.yin-yang-details {
+    flex: 1;
+}
+
+.yin-yang-details h4 {
+    margin: 0 0 10px 0;
+    color: #FFD700;
+}
+
+.yin-yang-details p {
+    margin: 5px 0;
+    color: #ffffff;
+}
+
+.yin-yang-details strong {
+    color: #4CAF50;
+}
+
+.trading-advice-section {
+    background: rgba(15, 15, 26, 0.8);
+    border: 2px solid #444;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    min-height: 120px;
+}
+
+#advice-placeholder {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    padding: 40px 0;
+}
+
+.advice-content {
+    color: white;
+    border-radius: 6px;
+    padding: 15px;
+    transition: all 0.3s ease;
+}
+
+.advice-header {
+    color: #FFD700;
+    font-size: 16px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 5px;
+}
+
+.advice-header strong {
+    font-size: 1.2em;
+    color: #FFD700;
+}
+
+.trading-recommendation {
+    font-size: 1.3em;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.advice-details {
+    display: grid;
+    gap: 10px;
+}
+
+.advice-details .label {
+    color: #888;
+    font-weight: normal;
+}
+
+.risk-info, .wave-info, .tips {
+    font-size: 14px;
+    line-height: 1.4;
+    padding: 8px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.tips {
+    font-style: italic;
+    color: #ccc;
+    margin-top: 5px;
+}
+
+.trigram-info {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.trigram-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.trigram-symbol {
+    font-size: 3rem;
+    color: #FFD700;
+}
+
+.trigram-details h4 {
+    color: #FFD700;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.trigram-details p {
+    color: #b0b0b0;
+    line-height: 1.6;
+}
+
+.trigram-characteristics {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.characteristic-tag {
+    background: rgba(255, 215, 0, 0.2);
+    color: #FFD700;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.charts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.chart-section {
+    position: relative;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    min-height: 400px;
+}
+
+.chart-section h3 {
+    color: #FFD700;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+canvas#energy-chart,
+canvas#monthly-chart {
+    width: 100% !important;
+    height: 300px !important;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem;
+    background: rgba(15, 15, 26, 0.95);
+    color: #888;
+    margin-top: 3rem;
+}
+
+/* Enhanced Trading Advice Styles */
+
+/* Current Hour Analysis */
+.current-hour-analysis {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px 0;
+}
+
+.current-hour-analysis h4 {
+    color: #FFD700;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.hour-info {
+    display: grid;
+    gap: 10px;
+}
+
+.can-chi-info,
+.element-info {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.good-hour {
+    color: #4CAF50;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.bad-hour {
+    color: #F44336;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.neutral-hour {
+    color: #FFC107;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.compatibility {
+    padding: 10px;
+    border-radius: 4px;
+    line-height: 1.4;
+}
+
+.compatibility-good {
+    color: #4CAF50;
+}
+
+.compatibility-bad {
+    color: #F44336;
+}
+
+.compatibility-neutral {
+    color: #FFC107;
+}
+
+.compatibility .note {
+    font-size: 0.9em;
+    opacity: 0.8;
+    margin-top: 4px;
+}
+
+/* Time Advice Section */
+.time-advice {
+    margin-top: 20px;
+}
+
+.auspicious-hours,
+.inauspicious-hours {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px 0;
+}
+
+.auspicious-hours {
+    border-left: 4px solid #4CAF50;
+}
+
+.inauspicious-hours {
+    border-left: 4px solid #F44336;
+}
+
+.time-details {
+    margin-top: 10px;
+    font-size: 0.9em;
+    display: grid;
+    gap: 5px;
+}
+
+.hour-detail {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 5px 10px;
+    border-radius: 4px;
+    display: inline-block;
+    margin: 2px;
+}
+
+.time-note {
+    margin-top: 10px;
+    font-style: italic;
+    color: #b0b0b0;
+}
+
+/* Labels and Common Elements */
+.label {
+    color: #FFD700;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .container {
+        padding: 1rem;
+    }
+
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+
+    .calendar-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    .charts-container {
+        grid-template-columns: 1fr;
+    }
+
+    .trigram-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    #trading-advice-section {
+        padding: 15px;
+    }
+    
+    .trading-recommendation {
+        font-size: 1.1em;
+    }
+    
+    .advice-details {
+        grid-template-columns: 1fr;
+    }
+    
+    .hour-info {
+        grid-template-columns: 1fr;
+    }
+    
+    .time-details {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .hour-detail {
+        font-size: 0.8em;
+    }
+    
+    .current-hour-analysis,
+    .auspicious-hours,
+    .inauspicious-hours {
+        padding: 10px;
+    }
+}
+
+/* Loading Animation */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 215, 0, 0.3);
+    border-radius: 50%;
+    border-top-color: #FFD700;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Smooth transitions */
+* {
+    transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Loading and Error Messages */
+#loading-message,
+#error-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 4px;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+}
+
+#error-message {
+    background: rgba(244, 67, 54, 0.9);
+    color: white;
+}
+
+#loading-message {
+    background: rgba(33, 150, 243, 0.9);
+    color: white;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInAdvice {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.advice-content {
+    animation: fadeInAdvice 0.3s ease-out;
+}
+
+/* Trading advice color schemes */
+.strong-buy {
+    background: rgba(76, 175, 80, 0.2);
+    border-left: 4px solid #4CAF50;
+}
+
+.moderate-buy {
+    background: rgba(33, 150, 243, 0.2);
+    border-left: 4px solid #2196F3;
+}
+
+.light-buy {
+    background: rgba(156, 204, 101, 0.2);
+    border-left: 4px solid #9CCC65;
+}
+
+.neutral {
+    background: rgba(255, 193, 7, 0.2);
+    border-left: 4px solid #FFC107;
+}
+
+.light-sell {
+    background: rgba(255, 152, 0, 0.2);
+    border-left: 4px solid #FF9800;
+}
+
+.strong-sell {
+    background: rgba(244, 67, 54, 0.2);
+    border-left: 4px solid #F44336;
+}
+
+.urgent-sell {
+    background: rgba(183, 28, 28, 0.2);
+    border-left: 4px solid #B71C1C;
+}
+
