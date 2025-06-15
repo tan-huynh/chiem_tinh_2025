@@ -110,6 +110,7 @@ function getCanChiForHour(hour) {
 
 function getAuspiciousHours(dayTrigram, dayElement) {
     const auspiciousHours = [];
+    dayElement = normalizeElement(dayElement);
     
     for (let hour = 0; hour < 24; hour++) {
         const { chi } = getCanChiForHour(hour);
@@ -127,6 +128,7 @@ function getAuspiciousHours(dayTrigram, dayElement) {
 
 function getInauspiciousHours(dayTrigram, dayElement) {
     const inauspiciousHours = [];
+    dayElement = normalizeElement(dayElement);
     
     for (let hour = 0; hour < 24; hour++) {
         const { chi } = getCanChiForHour(hour);
@@ -824,11 +826,26 @@ function updateTradingAdvice(dayData) {
                     ${auspiciousHours.map(hour => {
                         const hourCanChi = getCanChiForHour(hour);
                         const hourElement = getElementForChi(hourCanChi.chi);
+                        
+                        // Convert hour to time range
+                        const startHour = hour;
+                        const endHour = (hour + 2) % 24;
+                        const timeRange = `${startHour.toString().padStart(2, '0')}:00–${endHour.toString().padStart(2, '0')}:00`;
+                        
                         return `<div class="hour-detail">
-                            ${hour}h: ${hourCanChi.can} ${hourCanChi.chi} (${hourElement})
+                            ${timeRange}: ${hourCanChi.can} ${hourCanChi.chi} (${hourElement})
                         </div>`;
                     }).join('')}
-                    <div class="time-note">Các giờ có ngũ hành tương sinh với ${dayElement}, thích hợp cho giao dịch</div>
+                    <div class="time-note">
+                        <p>Các giờ có ngũ hành tương sinh với ${dayElement} (${getTrigramSymbol(dayElement)})</p>
+                        <p class="detailed-note">
+                            Theo quy luật sinh khắc ngũ hành:
+                            ${generateFiveElementsNote(dayElement)}
+                        </p>
+                        <p class="time-ranges">
+                            ${generateDetailedTimeRanges(dayElement)}
+                        </p>
+                    </div>
                 </div>
             </div>
             <div class="inauspicious-hours">
@@ -837,11 +854,23 @@ function updateTradingAdvice(dayData) {
                     ${inauspiciousHours.map(hour => {
                         const hourCanChi = getCanChiForHour(hour);
                         const hourElement = getElementForChi(hourCanChi.chi);
+                        
+                        // Convert hour to time range
+                        const startHour = hour;
+                        const endHour = (hour + 2) % 24;
+                        const timeRange = `${startHour.toString().padStart(2, '0')}:00–${endHour.toString().padStart(2, '0')}:00`;
+                        
                         return `<div class="hour-detail">
-                            ${hour}h: ${hourCanChi.can} ${hourCanChi.chi} (${hourElement})
+                            ${timeRange}: ${hourCanChi.can} ${hourCanChi.chi} (${hourElement})
                         </div>`;
                     }).join('')}
-                    <div class="time-note">Các giờ có ngũ hành xung khắc với ${dayElement}, nên tránh giao dịch</div>
+                    <div class="time-note">
+                        <p>Các giờ có ngũ hành xung khắc với ${dayElement}</p>
+                        <p class="detailed-note">
+                            Theo quy luật sinh khắc ngũ hành:
+                            ${generateFiveElementsConflictNote(dayElement)}
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -871,6 +900,67 @@ function updateTradingAdvice(dayData) {
             ${timeAdvice}
         </div>
     `;
+}
+
+function normalizeElement(element) {
+    // Map English element names to Vietnamese
+    const elementMap = {
+        'Mountain': 'Thổ',
+        'Metal': 'Kim',
+        'Water': 'Thủy',
+        'Wood': 'Mộc',
+        'Fire': 'Hỏa',
+        'Earth': 'Thổ'
+    };
+    return elementMap[element] || element;
+}
+
+function getTrigramSymbol(element) {
+    element = normalizeElement(element);
+    const trigramSymbols = {
+        'Kim': '☰,☱', // Càn, Đoài
+        'Hỏa': '☲',   // Ly
+        'Mộc': '☴,☳', // Tốn, Chấn
+        'Thủy': '☵',   // Khảm
+        'Thổ': '☶,☷'  // Cấn, Khôn
+    };
+    return trigramSymbols[element] || '';
+}
+
+function generateFiveElementsNote(element) {
+    element = normalizeElement(element);
+    const relationships = {
+        'Kim': 'Thổ sinh Kim',
+        'Hỏa': 'Mộc sinh Hỏa',
+        'Mộc': 'Thủy sinh Mộc',
+        'Thủy': 'Kim sinh Thủy',
+        'Thổ': 'Hỏa sinh Thổ'
+    };
+    return relationships[element] || '';
+}
+
+function generateDetailedTimeRanges(element) {
+    element = normalizeElement(element);
+    const timeRanges = {
+        'Kim': 'Giờ tương sinh: Sửu (01:00–03:00), Thìn (07:00–09:00), Mùi (13:00–15:00), Tuất (19:00–21:00) - thuộc hành Thổ sinh Kim',
+        'Hỏa': 'Giờ tương sinh: Dần (03:00–05:00), Mão (05:00–07:00) - thuộc hành Mộc sinh Hỏa',
+        'Mộc': 'Giờ tương sinh: Tý (23:00–01:00), Hợi (21:00–23:00) - thuộc hành Thủy sinh Mộc',
+        'Thủy': 'Giờ tương sinh: Thân (15:00–17:00), Dậu (17:00–19:00) - thuộc hành Kim sinh Thủy',
+        'Thổ': 'Giờ tương sinh: Tỵ (09:00–11:00), Ngọ (11:00–13:00) - thuộc hành Hỏa sinh Thổ'
+    };
+    return timeRanges[element] || '';
+}
+
+function generateFiveElementsConflictNote(element) {
+    element = normalizeElement(element);
+    const conflicts = {
+        'Kim': 'Dần, Mão (Mộc khắc Kim)',
+        'Hỏa': 'Thân, Dậu (Kim khắc Hỏa)',
+        'Mộc': 'Sửu, Thìn, Mùi, Tuất (Thổ khắc Mộc)',
+        'Thủy': 'Tỵ, Ngọ (Hỏa khắc Thủy)',
+        'Thổ': 'Tý, Hợi (Thủy khắc Thổ)'
+    };
+    return conflicts[element] || '';
 }
 
 

@@ -189,11 +189,20 @@ def calculate_hexagram_from_datetime(year, month, day, hour):
 
 def calculate_yin_yang_score(year, month, day):
     """
-    Simple Yin/Yang heuristic:
-    score = (day - month) + sum of year digits
+    Yin/Yang-Score:
+    - Basis = day - month
+    - Yin  (Basis >= 0): addiere year_digit_sum
+    - Yang (Basis <  0): subtrahiere year_digit_sum
     """
+    # 1) Ziffernsumme des Jahres
     year_digit_sum = sum(int(d) for d in str(year))
-    return (day - month) + year_digit_sum
+    # 2) Basis-Differenz
+    base = day - month
+    # 3) Yin positiv, Yang negativ
+    if base >= 0:
+        return base + year_digit_sum
+    else:
+        return base - year_digit_sum
 
 
 def get_yin_yang_interpretation(score):
@@ -222,7 +231,7 @@ def get_yin_yang_interpretation(score):
             'color': '#FFC107',
             'strength': 'balanced'
         }
-    elif score > -5:
+    elif -5 < score < 0:
         return {
             'type': 'Âm vừa phải',
             'description':
